@@ -1,9 +1,5 @@
 
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
 """
-evaluate_with_tta_min.py
-Avalia um modelo salvo N vezes com TTA, SEM usar DataLoader de PIL (evita collate error).
 Uso:
 python evaluate_with_tta_min.py --weights output/resnet18_global.pth --data_root client2_original --runs 10 --tta 8 --img_size 224 --csv_out resultados_eval_tta.csv
 """
