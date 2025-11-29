@@ -15,7 +15,7 @@ from utils.metrics import compute_metrics
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-print(f"🔥 Usando dispositivo: {DEVICE}")
+print(f"Usando dispositivo: {DEVICE}")
 if DEVICE.type == "cuda":
     print(f"   ↳ GPU detectada: {torch.cuda.get_device_name(0)}")
 CLIENT_VERSION = "client_v3_rgb_imagenet_macro_val"
@@ -179,7 +179,7 @@ class TumorClient(fl.client.NumPyClient):
         dist = {int(k): int(v) for k, v in zip(unique, counts)}
 
         print(
-            f"📊 Cliente ({label}): acc={acc:.4f} f1={f1:.4f} prec={prec:.4f} rec={rec:.4f} | "
+            f"Cliente ({label}): acc={acc:.4f} f1={f1:.4f} prec={prec:.4f} rec={rec:.4f} | "
             f"prec_por_classe={np.round(prec_c,3).tolist()} | preds_dist={dist}"
         )
 
