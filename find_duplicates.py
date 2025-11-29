@@ -21,19 +21,11 @@ def calculate_perceptual_hash(image_path):
     """Calcula o perceptual hash (pHash) de uma imagem."""
     try:
         with Image.open(image_path) as img:
-            # Converter para 'L' (escala de cinza) para normalizar antes do hash
             return imagehash.phash(img.convert('L'))
     except Exception:
-        # Retorna None se a imagem não puder ser aberta
         return None
 
-# --- Função Principal ---
-
 def find_duplicate_images(directory, p_hash_threshold=5, output_file="relatorio_duplicatas.txt"):
-    """
-    Analisa um diretório de imagens para encontrar duplicatas exatas e visuais
-    e salva o relatório em um arquivo de texto.
-    """
     image_paths = []
     supported_formats = ('.jpg', '.jpeg', '.png', '.bmp', '.tiff')
     for root, _, files in os.walk(directory):
@@ -42,10 +34,10 @@ def find_duplicate_images(directory, p_hash_threshold=5, output_file="relatorio_
                 image_paths.append(os.path.join(root, file))
 
     if not image_paths:
-        print("Nenhuma imagem encontrada no diretório especificado.")
+        print("Nenhuma imagem encontrada.")
         return
         
-    print(f"Encontradas {len(image_paths)} imagens. Iniciando análise de duplicatas...\n")
+    print(f"Encontradas {len(image_paths)} imagens. Iniciando análise.\n")
 
     corrupted_files = []
     file_hashes = defaultdict(list)
@@ -75,7 +67,7 @@ def find_duplicate_images(directory, p_hash_threshold=5, output_file="relatorio_
     image_list = list(image_hashes.keys())
     processed_images = set()
 
-    print("\nComparando hashes de imagem para encontrar duplicatas visuais...")
+    print("\nComparando hashes.")
     for i in tqdm(range(len(image_list)), desc="Comparando imagens"):
         img1_path = image_list[i]
         if img1_path in processed_images:
@@ -100,7 +92,6 @@ def find_duplicate_images(directory, p_hash_threshold=5, output_file="relatorio_
         if current_group:
             visual_duplicates[current_group[0]] = current_group
 
-    # --- Salvar Relatório em Arquivo ---
     with open(output_file, "w", encoding="utf-8") as f:
         f.write("--- Relatório de Duplicatas no Dataset ---\n\n")
 
@@ -120,9 +111,9 @@ def find_duplicate_images(directory, p_hash_threshold=5, output_file="relatorio_
             for file in duplicates:
                 f.write(f"    - {file}\n")
 
-        f.write("\n--- Fim do Relatório ---\n")
+        f.write("\nFim do Relatório\n")
 
-    print(f"\n✅ Relatório salvo em: {output_file}")
+    print(f"\n Relatório salvo em: {output_file}")
 
 
 if __name__ == '__main__':
@@ -143,3 +134,4 @@ if __name__ == '__main__':
             args.phash_threshold,
             args.output
         )
+
