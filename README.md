@@ -94,7 +94,7 @@ python -c "from federated.client import start_client; start_client('dataset_kagg
 ```
 ---
 
-## Test-Time Augmentation (TTA)
+## Aumento em Tempo de Teste (TTA)
 
 Após o treinamento federado, o modelo global passa por uma etapa adicional de avaliação utilizando **TTA (Test-Time Augmentation)**. O TTA aumenta a robustez e estabilidade das predições ao gerar múltiplas versões transformadas da mesma imagem de teste e combinar suas saídas.
 
