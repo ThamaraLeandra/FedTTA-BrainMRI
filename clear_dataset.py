@@ -17,13 +17,6 @@ def calculate_file_hash(filepath):
 
 
 def clean_dataset(directory, output_dir="dataset_limpo"):
-    """
-    Remove apenas duplicatas exatas (baseadas no hash SHA256) de um dataset.
-
-    Args:
-        directory (str): Pasta com as imagens originais (treino + teste).
-        output_dir (str): Pasta de saída para o dataset limpo.
-    """
     os.makedirs(output_dir, exist_ok=True)
 
     supported_formats = ('.jpg', '.jpeg', '.png', '.bmp', '.tiff')
@@ -33,12 +26,11 @@ def clean_dataset(directory, output_dir="dataset_limpo"):
         for file in files if file.lower().endswith(supported_formats)
     ]
 
-    print(f"📂 Total de imagens encontradas: {len(image_paths)}")
+    print(f"Total de imagens: {len(image_paths)}")
 
     corrupted_files = []
     file_hashes = defaultdict(list)
 
-    # --- Calcular hashes ---
     for path in tqdm(image_paths, desc="Calculando hashes"):
         try:
             with Image.open(path) as img:
@@ -51,10 +43,10 @@ def clean_dataset(directory, output_dir="dataset_limpo"):
         file_hash = calculate_file_hash(path)
         file_hashes[file_hash].append(path)
 
-    # --- Encontrar duplicatas exatas ---
+    # Encontrar duplicatas exatas 
     exact_duplicates = {k: v for k, v in file_hashes.items() if len(v) > 1}
 
-    # --- Remover duplicatas ---
+    # Remover duplicatas 
     kept = set()
     removed = []
 
@@ -62,7 +54,7 @@ def clean_dataset(directory, output_dir="dataset_limpo"):
         kept.add(files[0])  # mantém a primeira
         removed.extend(files[1:])  # remove o resto
 
-    # --- Copiar imagens únicas para o dataset limpo ---
+    # Copiar imagens únicas para o dataset limpo
     for path in image_paths:
         if path not in removed:
             rel_path = os.path.relpath(path, directory)
@@ -70,17 +62,14 @@ def clean_dataset(directory, output_dir="dataset_limpo"):
             os.makedirs(os.path.dirname(out_path), exist_ok=True)
             shutil.copy2(path, out_path)
 
-    # --- Estatísticas ---
-    print("\n✅ Limpeza concluída!")
-    print(f"📂 Total original: {len(image_paths)}")
-    print(f"❌ Duplicatas exatas removidas: {len(set(removed))}")
-    print(f"✔ Restaram: {len(image_paths) - len(set(removed))}")
-    print(f"📁 Dataset limpo salvo em: {output_dir}")
-
+    #  Estatísticas
+    print(f" Total original: {len(image_paths)}")
+    print(f" Duplicatas exatas removidas: {len(set(removed))}")
+    print(f" Restaram: {len(image_paths) - len(set(removed))}")
 
 if __name__ == "__main__":
-    # Exemplo de uso:
     clean_dataset(
         directory=Path("D:/TCC3/dataset_kaggle_preprocessed/all"),  # pasta onde estão treino+teste
         output_dir="dataset_processado_limpo"                     # pasta de saída
     )
+
