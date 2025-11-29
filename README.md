@@ -121,6 +121,6 @@ O estudo permite comparar:
 * Gráficos de perda e convergência
 * Impacto do pré-processamento no FL
 
-## 🧾 Observações Finais
+## Observações Finais
 
 Este repositório foi desenvolvido para fins **acadêmicos**, permitindo experimentos controlados com duas abordagens distintas de preparação de dados em um cenário de aprendizado federado.
