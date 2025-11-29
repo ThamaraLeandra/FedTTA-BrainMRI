@@ -58,7 +58,7 @@ class TumorKaggleDataset(Dataset):
 
 KaggleTumorDataset = TumorKaggleDataset
 
-# Transforms padronizados para TODOS os clientes
+# Transforms padronizados para todos os clientes
 def get_transforms(img_size=224, augment: bool = False):
     from torchvision import transforms
     IMAGENET_MEAN = [0.485, 0.456, 0.406]
