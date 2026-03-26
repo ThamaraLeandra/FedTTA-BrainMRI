@@ -1,126 +1,144 @@
-# Federated Learning para Classificação de Tumores Cerebrais com TTA para Detecção de Tumores Cerebrais
+# Federated Learning for Brain Tumor MRI Classification with Test-Time Augmentation
 
-Este repositório apresenta uma estrutura de treinamento federado aplicada à detecção de tumores cerebrais utilizando dois clientes distintos: um com imagens **originais** e outro com imagens **pré-processadas**. O objetivo principal é comparar o desempenho dos modelos locais e do modelo global federado, avaliando o impacto do pré-processamento no aprendizado distribuído.
-
----
-
-##  Pré-processamento
-
-O pré-processamento das imagens é realizado por um script dedicado preprocess.py, responsável por:
-
-* Redimensionamento com preservação ou não de proporção
-* Conversão para tons de cinza (opcional)
-* Forçar RGB quando necessário para backbones como ResNet18
-* Aplicação de filtros de redução de ruído (Gaussian/Bilateral)
-* Aplicação opcional de CLAHE para realce de contraste
-* Padronização de formato (JPG/PNG) e qualidade
-* Reorganização dos diretórios por classes
-
-Esse script é executado antes da etapa de treinamento federado e alimenta exclusivamente o **cliente pré-processado**.
-Este repositório utiliza um script dedicado de pré-processamento para preparar as imagens antes do treinamento. Esse script realiza tarefas como normalização, conversão, filtragem e organização das classes, sendo aplicado ao cliente que utiliza imagens pré-processadas.
+This repository presents a federated learning framework for brain tumor classification using two distinct clients: one trained on **original images** and another on **preprocessed images**. The main objective is to compare local and global model performance and evaluate the impact of preprocessing and test-time augmentation (TTA) in a distributed learning setting.
 
 ---
 
-## Objetivo do Projeto
+## Associated Publication
 
-Desenvolver e avaliar um modelo de **classificação de tumores cerebrais** utilizando **Aprendizado Federado (FL)** com dois clientes:
+This repository is associated with the following publication:
 
-* **Cliente 1**: Imagens **originais** do dataset Kaggle.
-* **Cliente 2**: Imagens **pré-processadas** com as seguintes etapas:
+Exploiting Test-Time Augmentation in Federated Learning for Brain Tumor MRI Classification  
+Thamara Leandra de Deus Melo, Rodrigo Moreira, Larissa Moreira, André Backes  
+Proceedings of the 21st International Conference on Computer Vision Theory and Applications (VISAPP), 2026  
+DOI: https://doi.org/10.5220/0014391000004084
 
-  * Redimensionamento
-  * Conversão para escala de cinza
-  * Normalização
-  * Filtros de suavização
-  * Equalização de histograma
-  * Segmentação com U-Net
+### Citation (BibTeX)
 
-O projeto busca responder:
-
-* O pré-processamento melhora a qualidade do modelo local?
-* O modelo federado é mais robusto do que os modelos individuais?
-* Como o FL se comporta com dados heterogêneos (original vs pré-processado)?
-
----
-
-## Arquitetura do Sistema
-
-O experimento utiliza uma arquitetura baseada em **FedAvg** com os seguintes componentes:
-
-* **Servidor**: Agrega os pesos enviados pelos clientes.
-* **Clientes (2)**:
-
-  * Cliente Original
-  * Cliente Pré-processado
-* **Arquitetura de Rede**: ResNet18
-
-Cada cliente treina localmente usando seu dataset e envia os pesos ao servidor, que realiza a agregação e redistribuição.
+@conference{visapp26,
+author={Thamara Melo and Rodrigo Moreira and Larissa Moreira and André Backes},
+title={Exploiting Test-Time Augmentation in Federated Learning for Brain Tumor MRI Classification},
+booktitle={Proceedings of the 21st International Conference on Computer Vision Theory and Applications - Volume 1: VISAPP},
+year={2026},
+pages={148-156},
+publisher={SciTePress},
+organization={INSTICC},
+doi={10.5220/0014391000004084},
+isbn={978-989-758-804-4},
+}
 
 ---
 
-## Pré-requisitos
+## Preprocessing
+
+Image preprocessing is performed by a dedicated script preprocess.py, responsible for:
+
+* Resizing (with or without aspect ratio preservation)
+* Optional grayscale conversion
+* RGB enforcement for compatibility with architectures such as ResNet18
+* Noise reduction filters (Gaussian/Bilateral)
+* Optional contrast enhancement using CLAHE
+* Format standardization (JPG/PNG)
+* Dataset reorganization by class
+
+This step is executed prior to federated training and is applied exclusively to the preprocessed client.
+
+---
+
+## Project Objective
+
+Develop and evaluate a brain tumor classification model using Federated Learning (FL) with two clients:
+
+* Client 1: Original MRI images (Kaggle dataset)
+* Client 2: Preprocessed images with:
+
+  * Resizing
+  * Grayscale conversion
+  * Normalization
+  * Smoothing filters
+  * Histogram equalization
+
+The project aims to answer:
+
+* Does preprocessing improve local model performance?
+* Is the federated model more robust than individual models?
+* How does FL behave with heterogeneous data?
+
+---
+
+## System Architecture
+
+The experiment uses a FedAvg-based architecture:
+
+* Server: Aggregates model weights from clients
+* Clients (2):
+
+  * Original client
+  * Preprocessed client
+* Model: ResNet18
+
+Each client trains locally and sends weights to the server, which aggregates and redistributes them.
+
+---
+
+## Requirements
 
 * Python 3.8+
 * PyTorch
 * NumPy
 * Matplotlib
-* Flower (ou outro framework FL)
-* Scikit-image / OpenCV (para pré-processamento)
+* Flower (or another FL framework)
+* Scikit-image / OpenCV
 
 ---
 
-## Como Executar
+## How to Run
 
-### **1. Preparar o dataset**
+### 1. Prepare the dataset
 
-Coloque as imagens nas pastas:
-
-```
-data/original/
+data/original/  
 data/preprocessed/
-```
 
-### **2. Iniciar o servidor**
+### 2. Start the server
 
-```bash
 python federated/server.py
-```
 
-### **3. Iniciar os clientes (cada um em um terminal)**
+### 3. Start the clients
 
-```bash
-python -c "from federated.client import start_client; start_client('dataset_kaggle/Training')"
-python -c "from federated.client import start_client; start_client('dataset_kaggle_preprocessed\\Train')"
-```
+python -c "from federated.client import start_client; start_client('dataset_kaggle/Training')"  
+python -c "from federated.client import start_client; start_client('dataset_kaggle_preprocessed/Train')"
+
 ---
 
-## Aumento em Tempo de Teste (TTA)
+## Test-Time Augmentation (TTA)
 
-Após o treinamento federado, o modelo global passa por uma etapa adicional de avaliação utilizando **TTA (Test-Time Augmentation)**. O TTA aumenta a robustez e estabilidade das predições ao gerar múltiplas versões transformadas da mesma imagem de teste e combinar suas saídas.
+After federated training, the global model is evaluated using TTA (Test-Time Augmentation), improving prediction robustness.
 
-As transformações incluem:
+Transformations include:
 
-* Rotação
-* Flip horizontal/vertical
-* Perturbações leves (ruído, alteração de brilho)
+* Rotation
+* Horizontal/vertical flip
+* Light perturbations (noise, brightness variation)
 
-O processo segue:
+Process:
 
-1. Para cada imagem de teste, são geradas *n* variações.
-2. O modelo prevê cada versão independentemente.
-3. As predições são agregadas (média ou votação majoritária).
+1. Generate multiple variations of each test image
+2. Run inference for each variation
+3. Aggregate predictions (mean or majority voting)
 
-Isso reduz a variabilidade e melhora a confiabilidade do modelo global em cenários reais.
+---
 
-## Resultados Esperados
+## Expected Results
 
-O estudo permite comparar:
+The study allows comparison of:
 
-* Acurácia dos modelos locais
-* Acurácia do modelo global federado
-* Gráficos de perda e convergência
-* Impacto do pré-processamento no FL
+* Local model accuracy
+* Federated model accuracy
+* Convergence behavior
+* Impact of preprocessing and TTA
 
-## Observações Finais
+---
 
-Este repositório foi desenvolvido para fins **acadêmicos**, permitindo experimentos controlados com duas abordagens distintas de preparação de dados em um cenário de aprendizado federado.
+## Final Remarks
+
+This repository was developed for academic purposes, enabling controlled experiments with heterogeneous data in a federated learning scenario.
