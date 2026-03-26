@@ -1,3 +1,7 @@
+Language:
+- English (default)
+- Português: [README.pt-BR.md](README.pt-BR.md)
+
 # Federated Learning for Brain Tumor MRI Classification with Test-Time Augmentation
 
 This repository presents a federated learning framework for brain tumor classification using two distinct clients: one trained on **original images** and another on **preprocessed images**. The main objective is to compare local and global model performance and evaluate the impact of preprocessing and test-time augmentation (TTA) in a distributed learning setting.
