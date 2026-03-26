@@ -1,4 +1,4 @@
-# Aprendizado Federado para Classificação de Tumores Cerebrais com Test-Time Augmentation
+# Federated Learning para Classificação de Tumores Cerebrais com TTA para Detecção de Tumores Cerebrais
 
 Este repositório apresenta uma estrutura de aprendizado federado aplicada à classificação de tumores cerebrais utilizando dois clientes distintos: um com imagens **originais** e outro com imagens **pré-processadas**. O objetivo principal é comparar o desempenho dos modelos locais e do modelo global, avaliando o impacto do pré-processamento e do uso de TTA.
 
