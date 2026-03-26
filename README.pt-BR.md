@@ -17,6 +17,10 @@ Thamara Leandra de Deus Melo, Rodrigo Moreira, Larissa Moreira, André Backes
 Proceedings of the 21st International Conference on Computer Vision Theory and Applications (VISAPP), 2026  
 DOI: https://doi.org/10.5220/0014391000004084
 
+### Citação (Estilo Harvard)
+
+Melo, T., Moreira, R., Moreira, L. e Backes, A. (2026). Exploiting Test-Time Augmentation in Federated Learning for Brain Tumor MRI Classification. In: Proceedings of the 21st International Conference on Computer Vision Theory and Applications - Volume 1: VISAPP. SciTePress, pp. 148–156. DOI: https://doi.org/10.5220/0014391000004084
+
 ---
 
 ## Pré-processamento
