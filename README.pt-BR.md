@@ -2,6 +2,10 @@
 
 Este repositório apresenta uma estrutura de aprendizado federado aplicada à classificação de tumores cerebrais utilizando dois clientes distintos: um com imagens **originais** e outro com imagens **pré-processadas**. O objetivo principal é comparar o desempenho dos modelos locais e do modelo global, avaliando o impacto do pré-processamento e do uso de TTA.
 
+Idioma:
+- Português (padrão)
+- English: [README.md](README.md)
+
 ---
 
 ## Publicação Associada
