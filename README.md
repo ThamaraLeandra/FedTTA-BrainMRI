@@ -19,17 +19,7 @@ DOI: https://doi.org/10.5220/0014391000004084
 
 ### Citation (BibTeX)
 
-@conference{visapp26,
-author={Thamara Melo and Rodrigo Moreira and Larissa Moreira and André Backes},
-title={Exploiting Test-Time Augmentation in Federated Learning for Brain Tumor MRI Classification},
-booktitle={Proceedings of the 21st International Conference on Computer Vision Theory and Applications - Volume 1: VISAPP},
-year={2026},
-pages={148-156},
-publisher={SciTePress},
-organization={INSTICC},
-doi={10.5220/0014391000004084},
-isbn={978-989-758-804-4},
-}
+Melo, T., Moreira, R., Moreira, L. and Backes, A. (2026). Exploiting Test-Time Augmentation in Federated Learning for Brain Tumor MRI Classification. In: Proceedings of the 21st International Conference on Computer Vision Theory and Applications - Volume 1: VISAPP. SciTePress, pp. 148–156. DOI: https://doi.org/10.5220/0014391000004084
 
 ---
 
