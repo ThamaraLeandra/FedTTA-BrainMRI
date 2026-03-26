@@ -1,0 +1,31 @@
+cff-version: 1.2.0
+title: "Exploiting Test-Time Augmentation in Federated Learning for Brain Tumor MRI Classification"
+message: "If you use this repository, please cite the associated publication."
+type: conference-paper
+
+authors:
+  - family-names: Melo
+    given-names: Thamara Leandra de Deus
+  - family-names: Moreira
+    given-names: Rodrigo
+  - family-names: Moreira
+    given-names: Larissa
+  - family-names: Backes
+    given-names: André
+
+year: 2026
+doi: 10.5220/0014391000004084
+
+conference:
+  name: "International Conference on Computer Vision Theory and Applications (VISAPP)"
+  year: 2026
+
+publisher: "SciTePress"
+
+keywords:
+  - Federated Learning
+  - Medical Imaging
+  - Brain Tumor Classification
+  - MRI
+  - Test-Time Augmentation
+  - Deep Learning
